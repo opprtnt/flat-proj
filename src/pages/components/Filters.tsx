@@ -10,19 +10,22 @@ import {
 } from "antd";
 import React from "react";
 import { memo } from "react";
+import { FiltersProps } from "../ManePageType";
 
 const { Panel } = Collapse;
 
-const Filters = memo(({ getData }) => {
-  const onFinish = (values) => {
+const Filters = memo(({ getData }: FiltersProps) => {
+  const onFinish = (values: { [x: string]: any }) => {
     const searchParams = new URLSearchParams();
 
     for (const key in values) {
       if (Object.prototype.hasOwnProperty.call(values, key)) {
         const param = values[key];
-        searchParams.append(key, param);
+        if (param !== undefined) searchParams.append(key, param);
       }
     }
+
+    getData(searchParams.toString());
   };
 
   return (
@@ -30,12 +33,12 @@ const Filters = memo(({ getData }) => {
       <Row gutter={8}>
         <Divider orientation="left">Количество комнат</Divider>
         <Col span={6}>
-          <Form.Item name={"minRooms"} label="от">
+          <Form.Item name={"minRoom"} label="от">
             <InputNumber style={{ width: "100%" }} />
           </Form.Item>
         </Col>
         <Col span={6}>
-          <Form.Item name={"maxRooms"} label="до">
+          <Form.Item name={"maxRoom"} label="до">
             <InputNumber style={{ width: "100%" }} />
           </Form.Item>
         </Col>
@@ -62,22 +65,26 @@ const Filters = memo(({ getData }) => {
           </Form.Item>
         </Col>
       </Row>
-      <Row>
-        <Collapse ghost>
-          <Panel header="Дополнительные фильтры" key="1">
-            <Col span={6}>
-              <Form.Item name={"maxAreaTotal"} label="до">
-                <InputNumber style={{ width: "100%" }} />
-              </Form.Item>
-            </Col>
-          </Panel>
-        </Collapse>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Фильтровать
-          </Button>
-        </Form.Item>
-      </Row>
+      <Collapse ghost>
+        <Panel header="Дополнительные фильтры" key="1">
+          <Divider orientation="left">Цена</Divider>
+          <Col span={8}>
+            <Form.Item name={"minAreaKitchen"} label="от">
+              <InputNumber style={{ width: "100%" }} />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item name={"minAreaKitchen"} label="до">
+              <InputNumber style={{ width: "100%" }} />
+            </Form.Item>
+          </Col>
+        </Panel>
+      </Collapse>
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Фильтровать
+        </Button>
+      </Form.Item>
     </Form>
   );
 });

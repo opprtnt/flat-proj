@@ -10,7 +10,6 @@ export declare type Flats = {
   layout_image: string;
 };
 
-export declare type MainTableProps = {
-  isReady: boolean;
-  data: Flats[];
+export declare type FiltersProps = {
+  getData: (string?) => void;
 };
