@@ -3,6 +3,7 @@ import "./App.css";
 import { Layout, Menu, MenuProps } from "antd";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import MainPage from "./pages/MainPage";
+import { isMobile } from "react-device-detect";
 
 function App() {
   const menu: MenuProps["items"] = [{ key: "1", label: "Главная страница" }];
@@ -17,10 +18,14 @@ function App() {
             items={menu}
           />
         </Header>
-        <Content style={{ margin: 24 }}>
+        <Content
+          style={{
+            margin: "24px auto",
+            maxWidth: isMobile ? "300px" : "1200px",
+          }}
+        >
           <MainPage />
         </Content>
-        <Footer>2023</Footer>
       </Layout>
     </div>
   );
