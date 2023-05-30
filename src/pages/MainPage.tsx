@@ -1,4 +1,4 @@
-import { Col, Dropdown, List, Row, Space, Spin } from "antd";
+import { Col, Dropdown, List, MenuProps, Row, Space, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { memo } from "react";
 import Filters from "./components/Filters";
@@ -12,11 +12,13 @@ const MainPage = memo(() => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(4);
   const [totalElements, setTotalElements] = useState(0);
+  const [sort, setSort] = useState({ dir: "", column: "" });
+  const [filterParams, setFilterParams] = useState("");
 
-  const getData = (params?: string) => {
+  const getData = () => {
     setIsReady(true);
     api
-      .get(`flat-table?page=${page}&size=${size}&${params ?? ""}`)
+      .get(`flat-table?page=${page}&size=${size}&${filterParams ?? ""}`)
       .then((res) => {
         setFlatDataList(res.data.data);
         setTotalElements(res.data.pagination.total);
@@ -32,14 +34,38 @@ const MainPage = memo(() => {
 
   useEffect(() => {
     getData();
-  }, [page, size]);
+  }, [page, size, filterParams]);
+
+  const sortMenu: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Цена по возрастанию",
+      onClick: () => setSort({ dir: "asc", column: "price" }),
+    },
+    {
+      key: "2",
+      label: "Цена по убыванию",
+      onClick: () => setSort({ dir: "desc", column: "price" }),
+    },
+    {
+      key: "4",
+      label: "Общ. площади по возрастанию",
+      onClick: () => setSort({ dir: "asc", column: "areaTotal" }),
+    },
+    {
+      key: "4",
+      label: "Общ. площади по убыванию",
+      onClick: () => setSort({ dir: "desc", column: "areaTotal" }),
+    },
+  ];
+
   return (
     <>
       <Row gutter={16}>
         <Col span={6} offset={12}>
-          <Dropdown>
+          <Dropdown menu={{ items: sortMenu }}>
             <Space>
-              Hover me
+              Сортировка
               <DownOutlined />
             </Space>
           </Dropdown>
@@ -86,7 +112,7 @@ const MainPage = memo(() => {
           </Spin>
         </Col>
         <Col span={8}>
-          <Filters getData={getData} />
+          <Filters setFilterParams={setFilterParams} />
         </Col>
       </Row>
     </>

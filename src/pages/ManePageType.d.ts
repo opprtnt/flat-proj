@@ -11,5 +11,5 @@ export declare type Flats = {
 };
 
 export declare type FiltersProps = {
-  getData: (string?) => void;
+  setFilterParams: Function;
 };

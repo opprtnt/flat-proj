@@ -14,7 +14,7 @@ import { FiltersProps } from "../ManePageType";
 
 const { Panel } = Collapse;
 
-const Filters = memo(({ getData }: FiltersProps) => {
+const Filters = memo(({ setFilterParams }: FiltersProps) => {
   const onFinish = (values: { [x: string]: any }) => {
     const searchParams = new URLSearchParams();
 
@@ -25,7 +25,7 @@ const Filters = memo(({ getData }: FiltersProps) => {
       }
     }
 
-    getData(searchParams.toString());
+    setFilterParams(searchParams.toString());
   };
 
   return (
