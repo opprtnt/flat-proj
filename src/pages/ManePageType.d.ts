@@ -13,3 +13,7 @@ export declare type Flats = {
 export declare type FiltersProps = {
   setFilterParams: Function;
 };
+
+export declare type PlanProps = {
+  clickFlat: (Flats) => void
+}
