@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Layout, Menu, MenuProps } from "antd";
-import { Content, Footer, Header } from "antd/es/layout/layout";
+import { Content, Header } from "antd/es/layout/layout";
 import MainPage from "./pages/MainPage";
 import { isMobile } from "react-device-detect";
 
